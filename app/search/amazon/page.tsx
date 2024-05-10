@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { scrapeAmazonProduct } from '@/lib/actions/amazon/index';
+import { scrapeAndStoreAmazonProduct } from '@/lib/actions/amazon/index';
 import { FormEvent, useState } from 'react';
 
 const page = () => {
@@ -39,7 +39,7 @@ const page = () => {
 
     try {
       setIsLoading(true);
-      const product = await scrapeAmazonProduct(amazonSearchPrompt);
+      const product = await scrapeAndStoreAmazonProduct(amazonSearchPrompt);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
