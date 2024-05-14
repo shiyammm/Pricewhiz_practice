@@ -10,22 +10,27 @@ import { connectToDB } from '@/lib/mongoose';
 import { scrapeAmazonProduct } from '@/lib/scrapers/amazon';
 import { revalidatePath } from 'next/cache';
 
+// Function to scrape and store Amazon product details
 export async function scrapeAndStoreAmazonProduct(productUrl: string) {
   if (!productUrl) return;
 
   try {
+    // Connect to MongoDB database
     connectToDB();
 
+    // Scrape product details from Amazon
     const scrapedProduct = await scrapeAmazonProduct(productUrl);
 
     if (!scrapedProduct) return console.log("Couldn't scrapeAmazonProduct");
 
     let product = scrapedProduct;
 
+    // Check if product already exists in the database
     const existingProduct = await Product.findOne({
       productUrl: scrapedProduct.url,
     });
 
+    // Update existing product if found
     if (existingProduct) {
       const updatedPriceHistory: any = [
         ...existingProduct.priceHistory,
@@ -41,6 +46,7 @@ export async function scrapeAndStoreAmazonProduct(productUrl: string) {
       };
     }
 
+    // Find and update product in the database, or insert if not found
     const newProduct = await Product.findOneAndUpdate(
       { url: scrapedProduct.url },
       product,
@@ -53,6 +59,7 @@ export async function scrapeAndStoreAmazonProduct(productUrl: string) {
   }
 }
 
+// Function to retrieve product by ID from the database
 export const getProductById = async (productId: string) => {
   try {
     connectToDB();
@@ -67,6 +74,7 @@ export const getProductById = async (productId: string) => {
   }
 };
 
+// Function to retrieve all products from the database
 export const getProductAll = async () => {
   try {
     connectToDB();

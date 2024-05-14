@@ -31,4 +31,12 @@ const ProductSchema = new mongoose.Schema(
 const Product =
   mongoose.models.Product || mongoose.model('Product', ProductSchema);
 
+/*  mongoose.models.Product This checks if the Product model has already been registered with Mongoose. 
+    If it has been registered, it returns the existing model. If not, it returns undefined.
+
+    mongoose.model('Product', ProductSchema): This creates or retrieves the Product model. 
+    If the model has already been registered, it returns the existing model. 
+    If not, it creates a new model using the provided schema (ProductSchema) and registers it with Mongoose under the name 'Product'. */
+
+
 export default Product;

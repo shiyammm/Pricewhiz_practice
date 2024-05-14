@@ -4,6 +4,7 @@ let isConnected = false;
 
 export async function connectToDB() {
   mongoose.set('strictQuery', true);
+  /* Ensures that any query condition with an undefined or null value is not included in the query sent to the MongoDB server.*/
 
   if (!process.env.MONGODB_URI) return console.log('MongoDB URI not found');
 

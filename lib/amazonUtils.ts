@@ -2,6 +2,7 @@ type PriceHistoryItem = {
   price: number;
 };
 
+// Extract Description
 export function extractDescription($: any) {
   const elements = $('#feature-bullets .a-unordered-list .a-spacing-mini span');
   if (elements.length > 0) {
@@ -14,11 +15,13 @@ export function extractDescription($: any) {
   return '';
 }
 
+// Extract Discount
 export function extractDiscount(discount: any) {
   const element = discount.text().trim().replace(/[-%]/g, '');
   return element;
 }
 
+// Extract Price
 export function extractPrice(...elements: any) {
   for (const element of elements) {
     const priceText = element.text().trim();
@@ -39,6 +42,7 @@ export function extractPrice(...elements: any) {
   return '';
 }
 
+// Extract Highest Price
 export function getHighestPrice(priceList: PriceHistoryItem[]) {
   let highestPrice = priceList[0];
 
@@ -51,6 +55,7 @@ export function getHighestPrice(priceList: PriceHistoryItem[]) {
   return highestPrice.price;
 }
 
+// Extract Lowest Price
 export function getLowestPrice(priceList: PriceHistoryItem[]) {
   let lowestPrice = priceList[0];
 
@@ -63,6 +68,7 @@ export function getLowestPrice(priceList: PriceHistoryItem[]) {
   return lowestPrice.price;
 }
 
+// Extract Average Price
 export function getAveragePrice(priceList: PriceHistoryItem[]) {
   const sumOfPrices = priceList.reduce((acc, curr) => acc + curr.price, 0);
   const averagePrice = sumOfPrices / priceList.length || 0;
